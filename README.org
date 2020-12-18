@@ -23,8 +23,28 @@ Maybe a good choice is /omf/ (oh-my-fish)
 
 **** Emacs
 
-*** Misc
+*** Programming
+
+**** Compiler
+
+***** gcc
+- gdb (debug)
+
+***** clang
+- llvm
+- lldb (debug)
+
+**** Building
+- make
+- cmake
+
+
+*** Picture & Video
 
 **** SimpleScreenRecord
+
+**** feh
+
+*** Misc
 
 ** Configs
