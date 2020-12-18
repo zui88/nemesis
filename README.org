@@ -1,0 +1,9 @@
+* Nemesis
+
+** Terminal
+
+- alacritty
+- fish
+
+** Window Manager
+- awersome
