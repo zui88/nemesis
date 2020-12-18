@@ -1,9 +1,30 @@
 * Nemesis
 
-** Terminal
+Maintain configs and a list of the various programs that have been installed during the time.
 
-- alacritty
-- fish
+** Programs
 
-** Window Manager
-- awersome
+*** Window Manager
+
+**** awesome
+
+*** Terminal
+
+**** Alacritty
+
+- Compirse /picom-jonaburg-git 0.1-4/
+- Located in awesome config directory
+
+**** fish
+
+Maybe a good choice is /omf/ (oh-my-fish)
+
+*** Editor
+
+**** Emacs
+
+*** Misc
+
+**** SimpleScreenRecord
+
+** Configs
