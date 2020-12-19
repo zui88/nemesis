@@ -7,6 +7,10 @@ Maintain configs and a list of the various programs that have been installed dur
 *** Window Manager
 
 **** awesome
+- tiling wm
+
+**** cinnamon
+- traditional wm
 
 *** Terminal
 
@@ -22,6 +26,10 @@ Maybe a good choice is /omf/ (oh-my-fish)
 *** Editor
 
 **** Emacs
+- pdfview
+- programming
+- text
+- ...
 
 *** Programming
 
@@ -41,9 +49,14 @@ Maybe a good choice is /omf/ (oh-my-fish)
 
 *** Picture & Video
 
-**** SimpleScreenRecord
+- SimpleScreenRecord
+- feh
+- mpv
+- youtube-dl
+- spotify
 
-**** feh
+**** olivia    (streaming)
+build with yay (AUR)
 
 *** Misc
 
