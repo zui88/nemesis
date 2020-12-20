@@ -485,7 +485,7 @@ awful.key({ modkey, "Shift"   }, "o", function() awful.util.spawn( "olivia" ) en
   -- gaps change
   awful.key({ altkey, "Control" }, "j", function () lain.util.useless_gaps_resize(1) end,
     {description = "increment useless gaps", group = "tag"}),
-  awful.key({ altkey, "Control" }, "h", function () lain.util.useless_gaps_resize(-1) end,
+  awful.key({ altkey, "Control" }, "k", function () lain.util.useless_gaps_resize(-1) end,
     {description = "decrement useless gaps", group = "tag"}),
 
   -- Dynamic tagging

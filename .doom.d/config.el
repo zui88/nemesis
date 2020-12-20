@@ -33,7 +33,7 @@
 ;; `load-theme' function. This is the default:
 ;;(setq doom-theme 'doom-one)
 (setq doom-theme 'doom-Iosvkem)
-(doom/set-frame-opacity 85)
+(doom/set-frame-opacity 95)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -66,6 +66,12 @@
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
 
+(use-package org-fancy-priorities
+  :hook (org-mode . org-fancy-priorities-mode)
+  :config
+  (setq org-fancy-priorities-list '("■" "■" "■")))
+
+
 (setq
  org-journal-dir "~/org/journal/"
  org-journal-date-prefix "#+TITLE: "
@@ -73,3 +79,82 @@
  org-journal-date-format "%a, %Y-%m-%d"
  org-journal-file-format "%Y-%m-%d.org"
  )
+
+
+(setq deft-directory "~/org/notes"
+      deft-extension '("txt" "org")
+      deft-recursive t)
+
+
+;; Dired
+(use-package all-the-icons)
+(add-to-list 'load-path (expand-file-name "~/.doom.d/all-the-icons-dired"))
+(load "all-the-icons-dired.el")
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+(map! :leader
+      :desc "Dired"
+      "d d" #'dired
+      :leader
+      :desc "Dired jump to current"
+      "d j" #'dired-jump
+      (:after dired
+        (:map dired-mode-map
+         :leader
+         :desc "Peep-dired image previews"
+         "d p" #'peep-dired
+         :leader
+         :desc "Dired view file"
+         "d v" #'dired-view-file)))
+;; Make 'h' and 'l' go back and forward in dired. Much faster to navigate the directory structure!
+(evil-define-key 'normal dired-mode-map
+  (kbd "h") 'dired-up-directory
+  (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
+;; If peep-dired is enabled, you will get image previews as you go up/down with 'j' and 'k'
+(evil-define-key 'normal peep-dired-mode-map
+  (kbd "j") 'peep-dired-next-file
+  (kbd "k") 'peep-dired-prev-file)
+(add-hook 'peep-dired-hook 'evil-normalize-keymaps)
+;; Get file icons in dired
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+;; With dired-open plugin, you can launch external programs for certain extensions
+;; For example, I set all .png files to open in 'sxiv' and all .mp4 files to open in 'mpv'
+(setq dired-open-extensions '(("gif" . "sxiv")
+                              ("jpg" . "sxiv")
+                              ("png" . "sxiv")
+                              ("mkv" . "mpv")
+                              ("mp4" . "mpv")))
+
+
+(map! :leader
+      :desc "Copy to register"
+      "r c" #'copy-to-register
+      :leader
+      :desc "Frameset to register"
+      "r f" #'frameset-to-register
+      :leader
+      :desc "Insert contents of register"
+      "r i" #'insert-register
+      :leader
+      :desc "Jump to register"
+      "r j" #'jump-to-register
+      :leader
+      :desc "List registers"
+      "r l" #'list-registers
+      :leader
+      :desc "Number to register"
+      "r n" #'number-to-register
+      :leader
+      :desc "Interactively choose a register"
+      "r r" #'counsel-register
+      :leader
+      :desc "View a register"
+      "r v" #'view-register
+      :leader
+      :desc "Window configuration to register"
+      "r w" #'window-configuration-to-register
+      :leader
+      :desc "Increment register"
+      "r +" #'increment-register
+      :leader
+      :desc "Point to register"
+      "r SPC" #'point-to-register)

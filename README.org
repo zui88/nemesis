@@ -6,22 +6,18 @@ Maintain configs and a list of the various programs that have been installed dur
 
 *** Window Manager
 
-**** awesome
+**** HOLD awesome
 - tiling wm
-
-**** cinnamon
-- traditional wm
 
 *** Terminal
 
 **** Alacritty
-
 - Compirse /picom-jonaburg-git 0.1-4/
 - Located in awesome config directory
 
-**** fish
-
+**** [ ] fish
 Maybe a good choice is /omf/ (oh-my-fish)
+- omf
 
 *** Editor
 
@@ -54,10 +50,21 @@ Maybe a good choice is /omf/ (oh-my-fish)
 - mpv
 - youtube-dl
 - spotify
+- deadbeef
+- variety
 
 **** olivia    (streaming)
 build with yay (AUR)
 
 *** Misc
 
-** Configs
+- rofi
+- dmenu
+
+*** Office
+
+**** ranger
+pdf utility for sorting out some pages
+
+**** pdftk
+split and combine pdf
