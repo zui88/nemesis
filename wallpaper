@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#sudo rm /tmp/arcologout.lock && arcolinux-logout
+sudo rm /tmp/arcologout.lock
