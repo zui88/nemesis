@@ -18,7 +18,7 @@ function inst {
 
 
 # updating the system
-sudo pacman -Syu
+sudo pacman -Syyu
 
 # wallpapers
 inst xwallpaper sxiv

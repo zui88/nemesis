@@ -6,10 +6,13 @@ Maintain configs and a list of the various programs that have been installed dur
 
 *** Window Manager
 
-**** HOLD awesome
-- tiling wm
+Got stuck in dwm. Just suckless.
 
 *** Terminal
+
+**** kitty
+
+Best terminal emulator so far I've tried.
 
 **** Alacritty
 - Compirse /picom-jonaburg-git 0.1-4/
@@ -18,6 +21,12 @@ Maintain configs and a list of the various programs that have been installed dur
 **** [ ] fish
 Maybe a good choice is /omf/ (oh-my-fish)
 - omf
+
+**** zsh
+
+**** spaceship prompt
+
+Just Awesome
 
 *** Editor
 
@@ -32,13 +41,16 @@ Maybe a good choice is /omf/ (oh-my-fish)
 **** Compiler
 
 ***** gcc
+
 - gdb (debug)
 
 ***** clang
+
 - llvm
 - lldb (debug)
 
 **** Building
+
 - make
 - cmake
 
@@ -56,15 +68,23 @@ Maybe a good choice is /omf/ (oh-my-fish)
 **** olivia    (streaming)
 build with yay (AUR)
 
-*** Misc
+*** Command Dispatcher
 
 - rofi
 - dmenu
 
 *** Office
 
-**** ranger
+**** ranger (never found again but ranger for terminal jumping the file system around is awesome
+)
 pdf utility for sorting out some pages
 
 **** pdftk
+
 split and combine pdf
+
+** Configs
+
+*** ZSH
+
+Prerequsite is the starship promp
