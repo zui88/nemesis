@@ -1,3 +1,4 @@
+
 * Nemesis
 
 Maintain configs and a list of the various programs that have been installed during the time.
@@ -88,3 +89,12 @@ split and combine pdf
 *** ZSH
 
 Prerequsite is the starship promp
+* God to know about
+
+** Gnome issues
+
+*** Control center
+
+    settings gone -> solution: reinstall =gnome-control-center=
+
+    found in [[https://askubuntu.com/questions/337335/system-settings-is-missing]]
