@@ -58,11 +58,6 @@ If the new path's directories does not exist, create them."
     backupFilePath))
 (setq make-backup-file-name-function 'my-backup-file-name)
 
-(setq ido-enable-flex-matching t)
-(setq ido-create-new-buffer 'always)
-;;(setq ido-everywhere t)
-(ido-mode 1)
-
 ;; cursor position
 (setq line-number-mode t)
 (setq column-number-mode t)
@@ -124,8 +119,14 @@ If the new path's directories does not exist, create them."
   ("C-x r b" . helm-filtered-bookmarks)
   :config
   (helm-mode 1))
+(setq ido-enable-flex-matching t)
+(setq ido-create-new-buffer 'always)
+;; (setq ido-everywhere t)
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
 (global-set-key (kbd "C-x C-f") 'ido-find-file)
+(ido-mode 1)
+
+
 
 ;; text manipulation
 (defun deadreth/return ()

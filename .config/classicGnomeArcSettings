@@ -1,0 +1,26 @@
+[/]
+arc-menu-placement='DTP'
+button-icon-padding=0
+custom-menu-button-icon-size=26.0
+disable-hotkey-onkeyrelease=true
+disable-recently-installed-apps=false
+disable-tooltips=false
+distro-icon=2
+dtp-dtd-state=[true, false]
+enable-large-icons=false
+enable-menu-button-arrow=false
+enable-sub-menus=false
+menu-button-active-color='rgb(192,28,40)'
+menu-button-appearance='Icon'
+menu-button-color='rgb(46,194,126)'
+menu-button-hover-color='rgb(192,28,40)'
+menu-button-icon='Distro_Icon'
+menu-height=1000
+menu-hotkey='Super_R'
+menu-layout='Budgie'
+menu-width=290
+pinned-app-list=['Firefox', '', 'firefox.desktop', 'Terminal', '', 'org.gnome.Terminal.desktop', 'ArcMenu Settings', 'ArcMenu_ArcMenuIcon', 'gnome-extensions prefs arcmenu@arcmenu.com']
+recently-installed-apps=['org.keepassxc.KeePassXC.desktop', 'anki.desktop', 'simplescreenrecorder.desktop', 'org.kde.kdenlive.desktop', 'pdfsam.desktop', 'jshell-java-openjdk.desktop', 'jconsole-java-openjdk.desktop', 'audacity.desktop']
+right-panel-width=205
+separator-color='rgb(63,62,64)'
+vert-separator=false
