@@ -104,6 +104,7 @@ If the new path's directories does not exist, create them."
 (add-hook 'term-mode-hook 'my-term-mode-hook)
 
 
+
 ;; buffer stuff
 (global-set-key (kbd "C-x b") 'ibuffer)
 ;;expert mode --noconfirmation
@@ -115,7 +116,7 @@ If the new path's directories does not exist, create them."
   :diminish (helm-mode)
   :bind
   ("M-x" . helm-M-x)
-;;  ("C-x C-f" . helm-find-files)
+  ("C-x C-f" . helm-find-files)
   ("C-x r b" . helm-filtered-bookmarks)
   :config
   (helm-mode 1))
@@ -123,7 +124,7 @@ If the new path's directories does not exist, create them."
 (setq ido-create-new-buffer 'always)
 ;; (setq ido-everywhere t)
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
-(global-set-key (kbd "C-x C-f") 'ido-find-file)
+;;(global-set-key (kbd "C-x C-f") 'ido-find-file)
 (ido-mode 1)
 
 
