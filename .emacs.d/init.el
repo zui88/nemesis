@@ -1,10 +1,32 @@
-;;; package
+;;; This fixed garbage collection, makes emacs start up faster ;;;;;;;
+(setq gc-cons-threshold 402653184
+      gc-cons-percentage 0.6)
+
+(defvar startup/file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
+
+(defun startup/revert-file-name-handler-alist ()
+  (setq file-name-handler-alist startup/file-name-handler-alist))
+
+(defun startup/reset-gc ()
+  (setq gc-cons-threshold 16777216
+	gc-cons-percentage 0.1))
+
+(add-hook 'emacs-startup-hook 'startup/revert-file-name-handler-alist)
+(add-hook 'emacs-startup-hook 'startup/reset-gc)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; This is all kinds of necessary
 (require 'package)
-;; not sure, what it is doing
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives 
-	     '("melpa" . "https://melpa.org/packages/") t)
+
+;;; remove SC if you are not using sunrise commander and org if you like outdated packages
+(setq package-archives '(("ELPA"  . "http://tromey.com/elpa/")
+			 ("gnu"   . "http://elpa.gnu.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")
+			 ("org"   . "https://orgmode.org/elpa/")))
 (package-initialize)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; make sure that use-package is installed
 (unless (package-installed-p 'use-package)
@@ -185,6 +207,23 @@ If the new path's directories does not exist, create them."
 
 ;; (add-hook 'dashboard-mode-hook (lambda () (local-set-key (kbd "n") 'dashboard-next-line)))
 ;; (add-hook 'dashboard-mode-hook (lambda () (local-set-key (kbd "p") 'dashboard-previous-line)))
+
+
+;; org stuff
+;;;;;;;;;;;;;;;;
+(use-package org-roam
+      :ensure t
+      :hook
+      (after-init . org-roam-mode)
+      :custom
+      (org-roam-directory "~/study/roam/")
+      :bind (:map org-roam-mode-map
+              (("C-c n l" . org-roam)
+               ("C-c n f" . org-roam-find-file)
+               ("C-c n g" . org-roam-graph))
+              :map org-mode-map
+              (("C-c n i" . org-roam-insert))
+              (("C-c n I" . org-roam-insert-immediate))))
 
 (use-package org-journal
   :ensure t
@@ -540,3 +579,24 @@ text and copying to the killring."
 ;; for more convenient tabbing
 (global-set-key (kbd "C-x t h") 'tab-previous)
 (global-set-key (kbd "C-x t l") 'tab-next)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(org-roam yasnippet-snippets which-key use-package symon swiper sudo-edit spaceline rotate rainbow-delimiters projectile org-superstar org-pdftools org-journal magit linum-relative ivy-rich ido-vertical-mode hungry-delete helm flycheck-clang-analyzer expand-region doom-themes dmenu diminish dashboard company-irony company-c-headers beacon ace-window)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-document-title ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif" :height 2.0 :underline nil))))
+ '(org-level-1 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif" :height 1.75))))
+ '(org-level-2 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif" :height 1.5))))
+ '(org-level-3 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif" :height 1.25))))
+ '(org-level-4 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif" :height 1.1))))
+ '(org-level-5 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif"))))
+ '(org-level-6 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif"))))
+ '(org-level-7 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif"))))
+ '(org-level-8 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif")))))
