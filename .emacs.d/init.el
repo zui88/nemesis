@@ -91,6 +91,11 @@ If the new path's directories does not exist, create them."
 (setq scroll-conservatively 100)
 
 
+;; vterm
+(use-package vterm
+    :ensure t)
+
+
 ;; ansi term
 (defvar my-term-shell "/bin/zsh")
 (defadvice ansi-term (before force-zsh)
@@ -126,8 +131,20 @@ If the new path's directories does not exist, create them."
 (add-hook 'term-mode-hook 'my-term-mode-hook)
 
 
-
 ;; buffer stuff
+(defun xah-new-empty-buffer ()
+  "Create a new empty buffer.
+New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
+
+It returns the buffer (for elisp programing)."
+  (interactive)
+  (let (($buf (generate-new-buffer "untitled")))
+    (switch-to-buffer $buf)
+    (funcall initial-major-mode)
+    (setq buffer-offer-save t)$buf))
+(global-set-key (kbd "<f7>") 'xah-new-empty-buffer)
+(setq initial-major-mode (quote org-mode))
+
 (global-set-key (kbd "C-x b") 'ibuffer)
 ;;expert mode --noconfirmation
 (setq ibuffer-expert t)
@@ -200,8 +217,9 @@ If the new path's directories does not exist, create them."
   :ensure t
   :config
   (dashboard-setup-startup-hook)
-  (setq dashboard-items '((recents  . 10)
-			  (projects . 10)))
+  (setq dashboard-items '((recents  . 20)
+;;			  (projects . 10)
+))
   (setq dashboard-startup-banner "~/.emacs.d/img/dashLogo.png")
   (setq dashboard-banner-logo-title ""))
 
@@ -215,6 +233,8 @@ If the new path's directories does not exist, create them."
       :ensure t
       :hook
       (after-init . org-roam-mode)
+      :diminish
+      (org-roam-mode)
       :custom
       (org-roam-directory "~/study/roam/")
       :bind (:map org-roam-mode-map
@@ -319,12 +339,12 @@ If the new path's directories does not exist, create them."
   (setq linum-relative-current-symbol "")
   (add-hook 'prog-mode-hook 'linum-relative-mode))
 
-(use-package spaceline
-  :ensure t
-  :config
-  (require 'spaceline-config)
-  (setq powerline-default-seperator (quote arrow))
-  (spaceline-spacemacs-theme))
+;; (use-package spaceline
+;;   :ensure t
+;;   :config
+;;   (require 'spaceline-config)
+;;   (setq powerline-default-seperator (quote arrow))
+;;   (spaceline-emacs-theme))
 
 (use-package async
   :ensure t
@@ -573,7 +593,7 @@ text and copying to the killring."
   (diminish 'eldoc-mode)
   (diminish 'auto-fill-mode)
   (diminish 'subword-mode)
-  (diminish 'pdf-view-mode)
+  (diminish 'auto-revert-mode)
   (diminish 'pdf-view-midnight-minor-mode))
 
 ;; for more convenient tabbing
@@ -585,7 +605,7 @@ text and copying to the killring."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(org-roam yasnippet-snippets which-key use-package symon swiper sudo-edit spaceline rotate rainbow-delimiters projectile org-superstar org-pdftools org-journal magit linum-relative ivy-rich ido-vertical-mode hungry-delete helm flycheck-clang-analyzer expand-region doom-themes dmenu diminish dashboard company-irony company-c-headers beacon ace-window)))
+   '(vterm org-roam yasnippet-snippets which-key use-package symon swiper sudo-edit spaceline rotate rainbow-delimiters projectile org-superstar org-pdftools org-journal magit linum-relative ivy-rich ido-vertical-mode hungry-delete helm flycheck-clang-analyzer expand-region doom-themes dmenu diminish dashboard company-irony company-c-headers beacon ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
