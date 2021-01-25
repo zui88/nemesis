@@ -1,0 +1,1 @@
+function [x] = pq( p, q)  % diskriminante  d = power(p/2, 2) - q;   x = -p/2 + sqrt(d);  x(2,1) = -p/2 - sqrt(d);endfunction
