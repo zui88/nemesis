@@ -13,6 +13,7 @@ function inst {
     echo -n "installation of: "
     # alle Aufrufparameter als ein String
     echo $*
+    # Aufrufparameter als einzelne Strings
     sudo pacman --noconfirm -S $@
 }
 
@@ -25,7 +26,7 @@ inst xwallpaper sxiv
 
 
 # video & audio
-inst mvp youtube-dl spotify
+inst mpv youtube-dl spotify
 # AUR
 inst yay
 yay olivia
