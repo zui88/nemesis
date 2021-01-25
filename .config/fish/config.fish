@@ -150,7 +150,7 @@ alias rn="reboot"
 # own shell scripts path
 # works in bash but not in fish
 # PATH=`echo "${PATH}:/home/zui/bin"`
-export PATH="/home/zui/bin:$PATH"
+export PATH="/home/zui/.local/bin:$PATH"
 
 # nice welcome
 # neofetch
