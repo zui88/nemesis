@@ -229,26 +229,26 @@ It returns the buffer (for elisp programing)."
 
 ;; org stuff
 ;;;;;;;;;;;;;;;;
-(use-package org-roam
-      :ensure t
-      :hook
-      (after-init . org-roam-mode)
-      :diminish
-      (org-roam-mode)
-      :custom
-      (org-roam-directory "~/study/roam/")
-      :bind (:map org-roam-mode-map
-              (("C-c n l" . org-roam)
-               ("C-c n f" . org-roam-find-file)
-               ("C-c n g" . org-roam-graph))
-              :map org-mode-map
-              (("C-c n i" . org-roam-insert))
-              (("C-c n I" . org-roam-insert-immediate))))
+;; (use-package org-roam
+;;       :ensure t
+;;       :hook
+;;       (after-init . org-roam-mode)
+;;       :diminish
+;;       (org-roam-mode)
+;;       :custom
+;;       (org-roam-directory "~/study/roam/")
+;;       :bind (:map org-roam-mode-map
+;;               (("C-c n l" . org-roam)
+;;                ("C-c n f" . org-roam-find-file)
+;;                ("C-c n g" . org-roam-graph))
+;;               :map org-mode-map
+;;               (("C-c n i" . org-roam-insert))
+;;               (("C-c n I" . org-roam-insert-immediate))))
 
 (use-package org-journal
   :ensure t
   :config
-  (setq org-journal-dir "~/study/journal/"
+  (setq org-journal-dir "~/journal/"
 	org-journal-date-prefix "#+title: "
 	org-journal-time-prefix "* "
 	org-journal-file-format "%Y-%m-%d.org"
@@ -266,6 +266,7 @@ It returns the buffer (for elisp programing)."
   :ensure t
   :config
   (setq magit-clone-always-transient t))
+(global-set-key (kbd "C-x g") 'magit)
 
 ;; show time
 (setq display-time-24hr-format t)
@@ -620,3 +621,5 @@ text and copying to the killring."
  '(org-level-6 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif"))))
  '(org-level-7 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif"))))
  '(org-level-8 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif")))))
+(put 'narrow-to-page 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
