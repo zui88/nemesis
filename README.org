@@ -3,7 +3,23 @@
 
 Maintain configs and a list of the various programs that have been installed during the time.
 
+
 ** Programs
+   
+*** Neet Programms rewritten in Rust
+    tldr similar to man
+    
+**** find -> ripgrep, called : rg 
+
+**** starship
+
+**** exa -> ls
+
+**** cat -> bat
+
+**** find -> fd
+
+**** ps -> procs
 
 *** Window Manager
 
