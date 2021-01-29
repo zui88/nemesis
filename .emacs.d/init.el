@@ -353,6 +353,11 @@ It returns the buffer (for elisp programing)."
   (dired-async-mode 1))
 (global-set-key (kbd "C-x C-j") 'dired-jump)
 
+;; zipping
+(eval-after-load "dired-aux"
+   '(add-to-list 'dired-compress-file-suffixes 
+                 '("\\.zip\\'" ".zip" "unzip")))
+
 (use-package popup
   :ensure t)
 
@@ -568,7 +573,7 @@ text and copying to the killring."
 (use-package sudo-edit
   :ensure t
   :bind
-  ("s-e" . sudo-edit))
+  ("C-c C-u" . sudo-edit))
 
 (use-package pdf-tools
   :ensure t
