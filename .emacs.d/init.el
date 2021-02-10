@@ -33,10 +33,21 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+
+
+;;; This is the actual config file. It is omitted if it doesn't exist so emacs won't refuse to launch.
+(when (file-readable-p "~/.emacs.d/config.org")
+  (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+
+
+
+;; opacity
 ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
 ;;(set-frame-parameter (selected-frame) 'alpha <both>)
-(set-frame-parameter (selected-frame) 'alpha '(85 . 50))
-(add-to-list 'default-frame-alist '(alpha . (85 . 50)))
+;; (set-frame-parameter (selected-frame) 'alpha '(85 . 50))
+;; (add-to-list 'default-frame-alist '(alpha . (85 . 50)))
+(set-frame-parameter (selected-frame) 'alpha '(85 . 85))
+(add-to-list 'default-frame-alist '(alpha . (85 . 85)))
 (defun toggle-transparency ()
   (interactive)
   (let ((alpha (frame-parameter nil 'alpha)))
@@ -47,7 +58,8 @@
                     ;; Also handle undocumented (<active> <inactive>) form.
                     ((numberp (cadr alpha)) (cadr alpha)))
               100)
-         '(85 . 50) '(100 . 100)))))
+         '(85 . 85) '(100 . 100)))))
+;;         '(85 . 50) '(100 . 100)))))
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
 ;; quick opening init-file
@@ -55,6 +67,7 @@
   (interactive)
   (find-file-existing "~/.emacs.d/init.el"))
 (global-set-key (kbd "C-c e") 'open-file-init)
+
 
 ;; obvious stuff
 (setq inhibit-startup-message t)
@@ -66,19 +79,32 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (global-set-key (kbd "C-c C-c") 'comment-or-uncomment-region)
 
-;; disable backup files
-;;(setq make-backup-files nil)
-
 ;; backup directory
-(defun my-backup-file-name (fpath)
-  "Return a new file path of a given file path.
-If the new path's directories does not exist, create them."
-  (let* ((backupRootDir "~/.emacs.d/backup/")
-        (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath )) ; remove Windows driver letter in path, for example, “C:”
-        (backupFilePath (replace-regexp-in-string "//" "/" (concat backupRootDir filePath "~") )))
-    (make-directory (file-name-directory backupFilePath) (file-name-directory backupFilePath))
-    backupFilePath))
-(setq make-backup-file-name-function 'my-backup-file-name)
+;; (defun my-backup-file-name (fpath)
+;;   "Return a new file path of a given file path.
+;; If the new path's directories does not exist, create them."
+;;   (let* ((backupRootDir "~/.emacs.d/backup/")
+;;         (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath )) ; remove Windows driver letter in path, for example, “C:”
+;;         (backupFilePath (replace-regexp-in-string "//" "/" (concat backupRootDir filePath "~") )))
+;;     (make-directory (file-name-directory backupFilePath) (file-name-directory backupFilePath))
+;;     backupFilePath))
+;; (setq make-backup-file-name-function 'my-backup-file-name)
+
+(defvar --backup-directory (concat user-emacs-directory "backups"))
+(if (not (file-exists-p --backup-directory))
+        (make-directory --backup-directory t))
+(setq backup-directory-alist `(("." . ,--backup-directory)))
+(setq make-backup-files t               ; backup of a file the first time it is saved.
+      backup-by-copying t               ; don't clobber symlinks
+      version-control t                 ; version numbers for backup files
+      delete-old-versions t             ; delete excess backup files silently
+      delete-by-moving-to-trash t
+      kept-old-versions 6               ; oldest versions to keep when a new numbered backup is made (default: 2)
+      kept-new-versions 9               ; newest versions to keep when a new numbered backup is made (default: 2)
+      auto-save-default t               ; auto-save every buffer that visits a file
+      auto-save-timeout 20              ; number of seconds idle time before auto-save (default: 30)
+      auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
+      )
 
 ;; cursor position
 (setq line-number-mode t)
@@ -148,6 +174,7 @@ It returns the buffer (for elisp programing)."
 (global-set-key (kbd "C-x b") 'ibuffer)
 ;;expert mode --noconfirmation
 (setq ibuffer-expert t)
+
 ;; switch buffers
 (use-package helm
   :ensure t
@@ -157,23 +184,18 @@ It returns the buffer (for elisp programing)."
   ("M-x" . helm-M-x)
   ("C-x C-f" . helm-find-files)
   ("C-x r b" . helm-filtered-bookmarks)
+  ("C-x C-b" . helm-buffers-list)
   :config
   (helm-mode 1))
+
 (setq ido-enable-flex-matching t)
 (setq ido-create-new-buffer 'always)
 ;; (setq ido-everywhere t)
-(global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
-;;(global-set-key (kbd "C-x C-f") 'ido-find-file)
+;;(global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
 (ido-mode 1)
 
 
-
-;; text manipulation
-(defun deadreth/return ()
-  (interactive)
-  (move-end-of-line 1)
-  (newline-and-indent))
-(global-set-key (kbd "C-j") 'deadreth/return)
+;;(global-set-key (kbd "C-j") 'deadreth/return)
 
 (defun deadreth/copy-whole-word ()
   (interactive)
@@ -227,32 +249,6 @@ It returns the buffer (for elisp programing)."
 ;; (add-hook 'dashboard-mode-hook (lambda () (local-set-key (kbd "p") 'dashboard-previous-line)))
 
 
-;; org stuff
-;;;;;;;;;;;;;;;;
-;; (use-package org-roam
-;;       :ensure t
-;;       :hook
-;;       (after-init . org-roam-mode)
-;;       :diminish
-;;       (org-roam-mode)
-;;       :custom
-;;       (org-roam-directory "~/study/roam/")
-;;       :bind (:map org-roam-mode-map
-;;               (("C-c n l" . org-roam)
-;;                ("C-c n f" . org-roam-find-file)
-;;                ("C-c n g" . org-roam-graph))
-;;               :map org-mode-map
-;;               (("C-c n i" . org-roam-insert))
-;;               (("C-c n I" . org-roam-insert-immediate))))
-
-(use-package org-journal
-  :ensure t
-  :config
-  (setq org-journal-dir "~/journal/"
-	org-journal-date-prefix "#+title: "
-	org-journal-time-prefix "* "
-	org-journal-file-format "%Y-%m-%d.org"
-	org-journal-date-format "%A, %d %B %Y"))
 
 (use-package projectile
   :ensure t
@@ -282,17 +278,17 @@ It returns the buffer (for elisp programing)."
   :bind
   ("s-H" . symon-mode))
 
-;; (use-package switch-window
-;;   :ensure t
-;;   :config
-;;   (setq switch-window-input-style 'minibuffer)
-;;   (setq switch-window-increase 8)
-;;   (setq switch-window-threshold 2)
-;;   (setq switch-window-shortcut-style 'qwerty)
-;;   (setq switch-window-qwerty-shortcuts
-;; 	'("a" "s" "d" "f" "h" "j" "k" "l"))
-;;   :bind
-;;   ([remap other-window] . switch-window))
+(use-package switch-window
+  :ensure t
+  :config
+  (setq switch-window-input-style 'minibuffer)
+  (setq switch-window-increase 8)
+  (setq switch-window-threshold 2)
+  (setq switch-window-shortcut-style 'qwerty)
+  (setq switch-window-qwerty-shortcuts
+	'("a" "s" "d" "f" "g" "h" "j" "k" "l"))
+  :bind
+  ([remap other-window] . switch-window))
 
 (use-package ace-window
   :ensure t
@@ -500,56 +496,6 @@ It returns the buffer (for elisp programing)."
        (lambda (c)
 	 (if (char-equal c ?\<) t (electric-pair-default-inhibit c))))
 
-;;;;;;;;;;;;;;;;;;;;
-;;org stuff
-(add-hook 'org-mode-hook (lambda () (local-set-key (kbd "C-j") 'deadreth/return)))
-
-(add-hook 'org-mode-hook (lambda () (auto-fill-mode 1)))
-
-(use-package org-superstar
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
-
-(require 'org-tempo)
-(add-to-list 'org-structure-template-alist
-	     '("el" . "src emacs-lisp"))
-
-;; for pretty org
-(setq org-hide-emphasis-markers t)
-;; different font sizes
-(let* ((variable-tuple
-        (cond ((x-list-fonts "ETBembo")         '(:font "ETBembo"))
-              ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
-              ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
-              ((x-list-fonts "Verdana")         '(:font "Verdana"))
-              ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
-              (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-       (base-font-color     (face-foreground 'default nil 'default))
-       (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
-  (custom-theme-set-faces
-   'user
-   `(org-level-8 ((t (,@headline ,@variable-tuple))))
-   `(org-level-7 ((t (,@headline ,@variable-tuple))))
-   `(org-level-6 ((t (,@headline ,@variable-tuple))))
-   `(org-level-5 ((t (,@headline ,@variable-tuple))))
-   `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
-   `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
-   `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
-   `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
-   `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
-
-(setq org-src-window-setup 'current-window)
-
-(setq org-tag-alist '(("@work" . ?w)
-		      ("@home" . ?h)
-		      ("organized" . ?o)
-		      ("laptop" . ?l)))
-
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "FEEDBACK" "VERIFY" "|" "DONE" "DELEGATED")
-        (sequence "REPORT" "BUG" "KNOWNCAUSE" "|" "FIXED")
-        (sequence "|" "CANCELED")))
 
 (defun my/copy-id-to-clipboard()
   "Copy the ID property value to killring,
@@ -567,7 +513,8 @@ text and copying to the killring."
 (global-set-key (kbd "<f5>") 'my/copy-id-to-clipboard)
 
 ;; camel case
-(global-subword-mode)
+;; maybe in some modes ... set hooks
+;(global-subword-mode)
 
 ;; super user - sudo
 (use-package sudo-edit
@@ -610,21 +557,14 @@ text and copying to the killring."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(global-subword-mode nil)
  '(package-selected-packages
-   '(vterm org-roam yasnippet-snippets which-key use-package symon swiper sudo-edit spaceline rotate rainbow-delimiters projectile org-superstar org-pdftools org-journal magit linum-relative ivy-rich ido-vertical-mode hungry-delete helm flycheck-clang-analyzer expand-region doom-themes dmenu diminish dashboard company-irony company-c-headers beacon ace-window)))
+   '(company-jedi eglot switch-window vterm org-roam yasnippet-snippets which-key use-package symon swiper sudo-edit spaceline rotate rainbow-delimiters projectile org-superstar org-pdftools org-journal magit linum-relative ivy-rich ido-vertical-mode hungry-delete helm flycheck-clang-analyzer expand-region doom-themes dmenu diminish dashboard company-irony company-c-headers beacon ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-document-title ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif" :height 2.0 :underline nil))))
- '(org-level-1 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif" :height 1.75))))
- '(org-level-2 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif" :height 1.5))))
- '(org-level-3 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif" :height 1.25))))
- '(org-level-4 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif" :height 1.1))))
- '(org-level-5 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif"))))
- '(org-level-6 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif"))))
- '(org-level-7 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif"))))
- '(org-level-8 ((t (:inherit default :weight bold :foreground "#dddddd" :family "Sans Serif")))))
+ )
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-region 'disabled nil)

@@ -72,7 +72,7 @@ alias ssdn="sudo shutdown now"
 # own shell scripts path
 # works in bash but not in fish
 # PATH=`echo "${PATH}:/home/zui/bin"`
-export PATH="/home/zui/.local/bin:$PATH"
+export PATH="~/.local/bin:$PATH"
 
 starship init fish | source
 
