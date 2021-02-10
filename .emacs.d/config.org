@@ -1,0 +1,74 @@
+#+STARTUP: overview
+
+* Def. Functions
+
+#+BEGIN_SRC emacs-lisp
+
+  ;; text manipulation
+  (defun deadreth/return ()
+    (interactive)
+    (move-end-of-line 1)
+    (newline-and-indent))
+
+#+END_SRC
+* Programming Stuff
+
+** Eglot
+
+#+begin_src emacs-lisp
+  ;; dependencies
+  ;; (use-package project
+  ;;   :ensure t)
+  ;; (use-package xref
+  ;;   :ensure t)
+  ;; (use-package eldoc
+  ;;   :ensure t)
+
+  ;; (use-package eglot
+  ;;   :ensure t)
+#+end_src
+
+** Python
+
+   + dependencies are
+   =pip install python-language-server=
+   =pip install virtualenv=
+
+#+begin_src emacs-lisp
+  ;; eglot
+  ;;(add-hook 'python-mode-hook 'eglot-ensure)
+
+  (add-hook 'python-mode-hook
+	    (lambda () (local-set-key (kbd "C-;") 'deadreth/return)))
+  (add-hook 'python-mode-hook 'yas-minor-mode)
+  (add-hook 'python-mode-hook 'flycheck-mode)
+
+  (with-eval-after-load 'company
+    (add-hook 'python-mode-hook 'company-mode))
+
+  (use-package company-jedi
+    :ensure t
+    :config
+    (require 'company)
+    (add-to-list 'company-backends 'company-jedi))
+
+  (defun python-mode-company-init ()
+    (setq-local company-backends '((company-jedi
+				    company-etags
+				    company-dabbrev-code))))
+
+  (use-package company-jedi
+    :ensure t
+    :config
+    (require 'company)
+    (add-hook 'python-mode-hook 'python-mode-company-init))
+#+end_src
+
+** C, C++
+
+#+begin_src emacs-lisp
+
+  (add-hook 'c-mode-hook
+	    (lambda () (local-set-key (kbd "C-;") 'deadreth/return)))
+
+#+end_src

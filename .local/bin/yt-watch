@@ -1,0 +1,53 @@
+#!/bin/bash
+
+dir="${HOME}/.local/yt/cache/"
+
+dlv-to-cache () {
+    youtube-dl --ignore-errors -o "${dir}%(title)s.%(ext)s" "$1"
+}
+
+mp3-to-cache () {
+    youtube-dl -i --extract-audio --audio-format mp3 --audio-quality 0 -o "${dir}%(title)s.%(ext)s" "$1"
+}
+
+usage() {
+    echo "$0 [-1..2] \"URL\"" >&2
+    echo "-1 video anschauen" >&2
+    echo "-2 audiospur hoeren" >&2
+    echo "default wie 1"
+}
+
+while getopts hH12 opt
+do
+    case $opt in
+	# Vom Benutzer gesetzte Optionen merken
+	# free space neccesarry for determination of each given options/flags
+	[12]) option="$option $opt";;
+	# Hilfe ausgeben und Beenden
+	[hH]) usage; exit 1;;
+	*)    usage; exit 1;; 
+    esac
+done
+
+#todo: - over ten elements in cache directory -> delete the oldest ones
+#      - if element yet there, omit download
+
+# option not empty string
+if [[ $option ]]
+then
+    for arg in $option
+    do
+	# debugging
+	#    echo "$arg"
+	case $arg in
+	    1) (dlv-to-cache  $2) ;;
+	    2) (mp3-to-cache  $2) ;;
+	    *) usage exit ;;
+	esac
+    done
+fi
+
+res=`find ${dir} -type f -printf "%p\n" | sort -n | tail -n 1`
+
+# background task
+mpv --fs "$res" &
