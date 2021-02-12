@@ -496,8 +496,6 @@ It returns the buffer (for elisp programing)."
        (lambda (c)
 	 (if (char-equal c ?\<) t (electric-pair-default-inhibit c))))
 
-<<<<<<< HEAD
-=======
 ;;;;;;;;;;;;;;;;;;;;
 ;;org stuff
 ;;(add-hook 'org-mode-hook (lambda () (local-set-key (kbd "C-j") 'deadreth/return)))
@@ -551,7 +549,7 @@ It returns the buffer (for elisp programing)."
       '((sequence "TODO(t)" "FEEDBACK" "VERIFY" "|" "DONE" "DELEGATED")
         (sequence "REPORT" "BUG" "KNOWNCAUSE" "|" "FIXED")
         (sequence "|" "CANCELED")))
->>>>>>> origin/main
+
 
 (defun my/copy-id-to-clipboard()
   "Copy the ID property value to killring,

@@ -11,7 +11,7 @@
     (newline-and-indent))
 
 #+END_SRC
-<<<<<<< HEAD
+
 * Org
 
   #+begin_src emacs-lisp
