@@ -11,6 +11,7 @@
     (newline-and-indent))
 
 #+END_SRC
+<<<<<<< HEAD
 * Org
 
   #+begin_src emacs-lisp
@@ -96,6 +97,8 @@
 
   #+end_src
 
+=======
+>>>>>>> origin/main
 * Programming Stuff
 
 ** Eglot
