@@ -55,6 +55,14 @@ text manipulation
       ("s-t" . vterm))
   #+End_src
 
+* Spice
+  Ngspice is a circuit network simulation tool alike ltspice but
+  working just with netlist files.
+
+  #+begin_src emacs-lisp
+    (add-to-list 'auto-mode-alist '("\\.cir\\'" . spice-mode))
+  #+end_src
+
 * Programming Stuff
 
 ** Common
